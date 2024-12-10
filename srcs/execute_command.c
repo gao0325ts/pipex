@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 23:30:58 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/10 23:33:56 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/10 23:44:51 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,9 @@ void	execute_command(char **path_list, char **cmd, char **envp)
 			free(path);
 			i++;
 		}
-		else
-			break;
 	}
-	free(path);
-	if (!path_list[i])
-	{
-		ft_putendl_fd("Error: command not found", STDERR_FILENO);
-		exit(1);
-	}
+	free_split(path_list);
+	free_split(cmd);
+	ft_putendl_fd("Error: command not found", STDERR_FILENO);
+	exit(1);
 }
