@@ -6,18 +6,20 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 23:30:58 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/10 23:44:51 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/11 19:25:20 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	execute_command(char **path_list, char **cmd, char **envp)
+void	execute_command(char **path_list, char *cmd_str, char **envp)
 {
 	char *path;
 	char *path_tail;
+    char **cmd;
 	int i;
 
+    cmd = ft_split(cmd_str, ' ');
 	i = 0;
 	while (path_list[i])
 	{
@@ -30,8 +32,8 @@ void	execute_command(char **path_list, char **cmd, char **envp)
 			i++;
 		}
 	}
+	ft_putendl_fd("Error: command not found", STDERR_FILENO);
 	free_split(path_list);
 	free_split(cmd);
-	ft_putendl_fd("Error: command not found", STDERR_FILENO);
 	exit(1);
 }

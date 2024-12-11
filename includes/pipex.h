@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 12:00:51 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/10 23:34:30 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/11 18:39:53 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	**get_path_list(char **envp);
 char	*find_path_str(char **envp);
 
 // execute_command.c
-void	execute_command(char **path_list, char **cmd, char **envp);
+void	execute_command(char **path_list, char *cmd_str, char **envp);
 
 // free.c
 void	free_split(char **array);
