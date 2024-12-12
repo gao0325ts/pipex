@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 22:25:52 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/10 22:49:22 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/12 13:27:42 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	**get_path_list(char **envp)
 
 char	*find_path_str(char **envp)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (envp[i])

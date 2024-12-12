@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 23:30:58 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/11 19:25:20 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/12 13:27:47 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	execute_command(char **path_list, char *cmd_str, char **envp)
 {
-	char *path;
-	char *path_tail;
-    char **cmd;
-	int i;
+	char	*path;
+	char	*path_tail;
+	char	**cmd;
+	int		i;
 
-    cmd = ft_split(cmd_str, ' ');
+	cmd = ft_split(cmd_str, ' ');
 	i = 0;
 	while (path_list[i])
 	{
