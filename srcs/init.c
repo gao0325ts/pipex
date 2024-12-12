@@ -6,13 +6,13 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 12:59:38 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/12 14:05:45 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/12 14:17:54 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-t_vars	*init_pipex(int argc, char **argv)
+t_vars	*init_struct(int argc, char **argv)
 {
 	t_vars	*vars;
 

@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 12:00:38 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/12 14:07:51 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/12 14:20:37 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,15 @@ int	main(int argc, char *argv[], char *envp[])
 	path_list = get_path_list(envp);
 	if (!path_list)
 		return (1);
-	vars = init_pipex(argc, argv);
+	vars = init_struct(argc, argv);
 	if (!vars)
     {
         free_split(path_list);
 		return (1);
     }
-	// pipex(path_list, argc, argv, envp);
-	// while (wait(NULL) > 0)
-	// 	;
+	pipex(path_list, vars, envp);
+	while (wait(NULL) > 0)
+		;
 	free_split(path_list);
 	free(vars->cmds);
     free(vars);

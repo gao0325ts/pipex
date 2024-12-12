@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 12:00:51 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/12 14:00:31 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/12 15:07:02 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char		**get_path_list(char **envp);
 char		*find_path_str(char **envp);
 
 // init.c
-t_vars		*init_pipex(int argc, char **argv);
+t_vars		*init_struct(int argc, char **argv);
 int			is_here_doc(char *str);
 int			init_basic(int argc, char **argv, t_vars *vars);
 int			init_here_doc(int argc, char **argv, t_vars *vars);
@@ -47,9 +47,9 @@ int			init_here_doc(int argc, char **argv, t_vars *vars);
 void		execute_command(char **path_list, char *cmd_str, char **envp);
 
 // pipex.h
-void		pipex(char **path_list, int argc, char **argv, char **envp);
-void		last_command(char **path_list, int iofd[2], char *outfile,
-				char *last_cmd, char **envp);
+void		pipex(char **path_list, t_vars *vars, char **envp);
+void		last_command(char **path_list, int iofd[2], t_vars *vars,
+				char **envp);
 
 // free.c
 void		free_split(char **array);
