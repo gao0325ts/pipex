@@ -6,25 +6,11 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 22:25:52 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/17 14:38:49 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/17 22:47:19 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-char	**get_path_list(char **envp)
-{
-	char	*path_str;
-	char	**path_list;
-
-	path_str = find_path_str(envp);
-	if (!path_str)
-		return (NULL);
-	path_list = ft_split(path_str, ':');
-	if (!path_list)
-		return (NULL);
-	return (path_list);
-}
 
 char	*find_path_str(char **envp)
 {
@@ -38,4 +24,18 @@ char	*find_path_str(char **envp)
 		i++;
 	}
 	return (NULL);
+}
+
+char	**get_path_list(char **envp)
+{
+	char	*path_str;
+	char	**path_list;
+
+	path_str = find_path_str(envp);
+	if (!path_str)
+		return (NULL);
+	path_list = ft_split(path_str, ':');
+	if (!path_list)
+		return (NULL);
+	return (path_list);
 }
