@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:15:51 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/17 14:37:49 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/17 15:09:29 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,8 @@ int	check_outfile(char *outfile)
 	int	fd;
 
 	if (access(outfile, F_OK) == -1)
-	{
-		return (-1);
-	}
-	fd = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		return (0);
+	fd = open(outfile, O_WRONLY);
 	if (fd < 0)
 		return (-1);
 	close(fd);
