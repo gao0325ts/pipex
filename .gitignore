@@ -7,6 +7,7 @@
 !lib/includes/*.h
 !lib/get_next_line/*.c
 !lib/libft/*.c
+!lib/ft_printf/*.c
 !includes/
 !includes/*.h
 !srcs/

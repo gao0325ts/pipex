@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 12:59:38 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/12 14:17:54 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/17 14:38:52 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ int	init_basic(int argc, char **argv, t_vars *vars)
 	while (i < vars->cmd_count)
 	{
 		vars->cmds[i] = argv[2 + i];
-        i++; 
+		i++;
 	}
-    vars->cmds[i] = NULL;
+	vars->cmds[i] = NULL;
 	return (0);
 }
 
@@ -82,9 +82,9 @@ int	init_here_doc(int argc, char **argv, t_vars *vars)
 	i = 0;
 	while (i < vars->cmd_count)
 	{
-        vars->cmds[i] = argv[i + 3];
+		vars->cmds[i] = argv[i + 3];
 		i++;
 	}
-    vars->cmds[i] = NULL;
+	vars->cmds[i] = NULL;
 	return (0);
 }

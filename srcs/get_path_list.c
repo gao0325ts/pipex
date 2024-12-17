@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 22:25:52 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/12 13:27:42 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/17 14:38:49 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ char	**get_path_list(char **envp)
 	char	**path_list;
 
 	path_str = find_path_str(envp);
-	if (!path_str) // TODO エラーメッセージ出力？
+	if (!path_str)
 		return (NULL);
 	path_list = ft_split(path_str, ':');
-	if (!path_list) // TODO エラーメッセージ出力？
+	if (!path_list)
 		return (NULL);
 	return (path_list);
 }
