@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 12:00:51 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/17 22:48:25 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/17 22:55:01 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <string.h>
+# include <errno.h>
 
 typedef struct s_vars
 {
