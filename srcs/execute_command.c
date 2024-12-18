@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 23:30:58 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/17 22:59:21 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/17 23:06:45 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	execute_command(char **path_list, char *cmd_str, char **envp)
 	}
 	if (execve(cmd_path, cmd, envp) == -1)
 	{
-		ft_dprintf(STDERR_FILENO, "%s: %s\n", cmd_path, strerror(errno));
+		handle_error(cmd_path, 1);
 		free(cmd_path);
 		free_split(path_list);
 		free_split(cmd);

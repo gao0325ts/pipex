@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 22:53:27 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/18 04:50:04 by stakada          ###   ########.fr       */
+/*   Created: 2024/12/18 04:00:18 by stakada           #+#    #+#             */
+/*   Updated: 2024/12/18 04:29:43 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	free_split(char **array)
+int	check_infile(char *infile)
 {
-	int	i;
-
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
+	if (access(infile, F_OK) == -1)
+		return (-1);
+	else if (access(infile, R_OK) == -1)
+		return (-1);
+	return (0);
 }
 
-void    free_vars(t_vars *vars)
+int	check_outfile(char *outfile)
 {
-	free_split(vars->path_list);
-    free(vars->cmds);
-    free(vars);
+	int	fd;
+
+	if (access(outfile, F_OK) == -1)
+		return (0);
+	fd = open(outfile, O_WRONLY);
+	if (fd < 0)
+		return (-1);
+	close(fd);
+	return (0);
 }

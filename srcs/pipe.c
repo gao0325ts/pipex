@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:15:51 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/17 22:48:10 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/18 05:02:06 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,102 +14,86 @@
 
 void	handle_error(char *str, int exit_status)
 {
-	perror(str);
+	ft_dprintf(STDERR_FILENO, "%s: %s\n", str, strerror(errno));
 	exit(exit_status);
 }
 
-
-int	check_infile(char *infile)
+void	handle_input_fd(char *infile, int pipefd[2])
 {
-	if (access(infile, F_OK) == -1)
-	{
-		return (-1);
-	}
-	else if (access(infile, R_OK) == -1)
-	{
-		return (-1);
-	}
-	return (0);
-}
+	int	infile_fd;
 
-int	check_outfile(char *outfile)
-{
-	int	fd;
-
-	if (access(outfile, F_OK) == -1)
-		return (0);
-	fd = open(outfile, O_WRONLY);
-	if (fd < 0)
-		return (-1);
-	close(fd);
-	return (0);
-}
-
-void	execute_pipeline(char **path_list, t_vars *vars, char **envp)
-{
-	int		pipefd[2];
-	int		iofd[2] = {-1, -1};
-	int		i;
-	pid_t	pid;
-
-	pipe(pipefd);
-	pid = fork();
-	if (pid < 0)
-		handle_error("fork", 1);
-	if (pid == 0)
-	{
-		if (check_infile(vars->infile) == -1)
-			handle_error(vars->infile, 1);
-		iofd[0] = open(vars->infile, O_RDONLY);
-		if (iofd[0] < 0)
-			handle_error(vars->infile, 1);
-		dup2(iofd[0], STDIN_FILENO);
-		close(iofd[0]);
-		dup2(pipefd[1], STDOUT_FILENO);
-		close(pipefd[1]);
-		close(pipefd[0]);
-		execute_command(path_list, vars->cmds[0], envp);
-	}
+	if (check_infile(infile) == -1)
+		handle_error(infile, 1);
+	infile_fd = open(infile, O_RDONLY);
+	if (infile_fd < 0)
+		handle_error(infile, 1);
+	dup2(infile_fd, STDIN_FILENO);
+	close(infile_fd);
+	dup2(pipefd[1], STDOUT_FILENO);
 	close(pipefd[1]);
-	iofd[0] = pipefd[0];
-	i = 1;
-	while (i < vars->cmd_count - 1)
+	close(pipefd[0]);
+}
+
+void	handle_output_fd(char *outfile, int input_fd, int pipefd[2])
+{
+	int outfile_fd;
+
+	if (check_outfile(outfile) == -1)
+		handle_error(outfile, 1);
+	outfile_fd = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (outfile_fd < 0)
+		handle_error(outfile, 1);
+	dup2(input_fd, STDIN_FILENO);
+	close(input_fd);
+	dup2(outfile_fd, STDOUT_FILENO);
+	close(outfile_fd);
+	close(pipefd[1]);
+	close(pipefd[0]);
+}
+
+void	handle_middle_fd(int input_fd, int pipefd[2])
+{
+	dup2(input_fd, STDIN_FILENO);
+	close(input_fd);
+	dup2(pipefd[1], STDOUT_FILENO);
+	close(pipefd[1]);
+	close(pipefd[0]);
+}
+
+void	handle_fildes(int i, t_vars *vars, int input_fd, int pipefd[2])
+{
+	if (i == 0)
+        handle_input_fd(vars->infile, pipefd);
+    else if (i == vars->cmd_count - 1)
+        handle_output_fd(vars->outfile, input_fd, pipefd);
+    else
+        handle_middle_fd(input_fd, pipefd);
+}
+
+void	execute_pipeline(t_vars *vars, char **envp, pid_t *pid)
+{
+	int	pipefd[2];
+	int	input_fd;
+	int i;
+
+	input_fd = STDIN_FILENO;
+	i = 0;
+	while (i < vars->cmd_count)
 	{
-		pipe(pipefd);
-		pid = fork();
-		if (pid < 0)
+		if (pipe(pipefd) < 0)
+			handle_error("pipe", 1);
+		(*pid) = fork();
+		if (*pid < 0)
 			handle_error("fork", 1);
-		if (pid == 0)
+		if (*pid == 0)
 		{
-			dup2(iofd[0], STDIN_FILENO);
-			close(iofd[0]);
-			dup2(pipefd[1], STDOUT_FILENO);
-			close(pipefd[1]);
-			close(pipefd[0]);
-			execute_command(path_list, vars->cmds[i], envp);
+			handle_fildes(i, vars, input_fd, pipefd);
+			execute_command(vars->path_list, vars->cmds[i], envp);
 		}
 		close(pipefd[1]);
-		close(iofd[0]);
-		iofd[0] = pipefd[0];
+		input_fd = pipefd[0];
+		if (i == vars->cmd_count - 1)
+			close(input_fd);
 		i++;
 	}
-	pid = fork();
-	if (pid < 0)
-		handle_error("fork", 1);
-	if (pid == 0)
-	{
-		if (check_outfile(vars->outfile) == -1)
-			handle_error(vars->outfile, 1);
-		iofd[1] = open(vars->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (iofd[1] < 0)
-			handle_error(vars->outfile, 1);
-		dup2(iofd[0], STDIN_FILENO);
-		close(iofd[0]);
-		dup2(iofd[1], STDOUT_FILENO);
-		close(iofd[1]);
-		execute_command(path_list, vars->cmds[i], envp);
-	}
-	close(iofd[0]);
-	close(iofd[1]);
 }
-

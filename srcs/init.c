@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 12:59:38 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/17 22:47:49 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/18 04:52:08 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	init_here_doc(int argc, char **argv, t_vars *vars)
 
 	vars->is_here_doc = 1;
 	vars->limiter = argv[2];
-	vars->infile = NULL;
+	vars->infile = ".here_doc_tmp";
 	vars->outfile = argv[argc - 1];
 	vars->cmd_count = (argc - 1) - 3;
 	vars->cmds = (char **)malloc(sizeof(char *) * (vars->cmd_count + 1));
