@@ -23,6 +23,8 @@ $(NAME): $(OBJS)
 .c.o:
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
+bonus: all
+
 clean:
 	$(MAKE) -C $(LIB_DIR) clean
 	$(RM) $(OBJS)

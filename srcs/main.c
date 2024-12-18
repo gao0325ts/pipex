@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/06 12:00:38 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/18 20:24:55 by stakada          ###   ########.fr       */
+/*   Created: 2024/12/18 20:42:25 by stakada           #+#    #+#             */
+/*   Updated: 2024/12/19 00:03:44 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc < 5)
 	{
-		ft_putendl_fd("Usage: ./pipex file1 cmd1 cmd2 file2", STDERR_FILENO);
+		ft_putendl_fd("Usage: ./pipex file1 cmd1 cmd2 ... cmdN file2", STDERR_FILENO);
 		return (1);
 	}
 	vars = init_struct(argc, argv, envp);
