@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 12:00:51 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/18 05:02:18 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/18 20:35:50 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
+# define TMP_FILE ".here_doc_tmp"
+
 typedef struct s_vars
 {
 	int		is_here_doc;
@@ -37,20 +39,43 @@ typedef struct s_vars
 	int		cmd_count;
 }			t_vars;
 
+// get_path_list.c
 char		**get_path_list(char **envp);
 char		*find_path_str(char **envp);
-t_vars		*init_struct(int argc, char **argv);
+
+// init.c
+t_vars		*init_struct(int argc, char **argv, char **envp);
 int			is_here_doc(char *str);
 int			init_basic(int argc, char **argv, t_vars *vars);
 int			init_here_doc(int argc, char **argv, t_vars *vars);
-void		execute_here_doc_pipeline(char **path_list, t_vars *vars,
-				char **envp);
-void		execute_pipeline(t_vars *vars, char **envp, pid_t *pid);
-int			check_infile(char *infile);
-int			check_outfile(char *outfile);
-void		handle_error(char *str, int exit_status);
+
+// here_doc.c
+void		run_here_doc_pipeline(t_vars *vars, char **envp, int *pid);
+void		handle_here_doc_input(char *infile, char *limiter);
+void		set_here_doc_streams(char *infile, char *outfile);
+
+// pipeline.c
+void		run_pipeline(t_vars *vars, char **envp, pid_t *pid);
+void		set_streams(int i, t_vars *vars, int input_fd, int pipefd[2]);
+void		set_input_stream(char *infile, int pipefd[2]);
+void		set_output_stream(char *outfile, int input_fd, int pipefd[2]);
+void		set_pipe_stream(int input_fd, int pipefd[2]);
+
+// validate.c
+int			validate_infile(char *infile);
+int			validate_outfile(char *outfile);
+
+// execute_command.c
 void		execute_command(char **path_list, char *cmd_str, char **envp);
-void		free_split(char **array);
+char		*check_command_path(char *cmd, char **path_list);
+char		*find_command_path(char *cmd_name, char **path_list);
+
+// free.c
+void		free_2d_array(char **array);
 void		free_vars(t_vars *vars);
+
+// exit.c
+void		exit_with_message(int exit_status, char *str);
+int			get_last_exit_code(pid_t pid);
 
 #endif

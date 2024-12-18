@@ -1,41 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_path_list.c                                    :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 22:25:52 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/18 16:53:08 by stakada          ###   ########.fr       */
+/*   Created: 2024/12/10 22:53:27 by stakada           #+#    #+#             */
+/*   Updated: 2024/12/18 20:36:31 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*find_path_str(char **envp)
+void	exit_with_message(int exit_status, char *str)
 {
-	int	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		if (!ft_strncmp(envp[i], "PATH=", 5))
-			return (&envp[i][5]);
-		i++;
-	}
-	return (NULL);
+	ft_dprintf(STDERR_FILENO, "%s: %s\n", str, strerror(errno));
+	exit(exit_status);
 }
 
-char	**get_path_list(char **envp)
+int	get_last_exit_code(pid_t pid)
 {
-	char	*path_str;
-	char	**path_list;
+	int	status;
 
-	path_str = find_path_str(envp);
-	if (!path_str)
-		return (NULL);
-	path_list = ft_split(path_str, ':');
-	if (!path_list)
-		return (NULL);
-	return (path_list);
+	if (waitpid(pid, &status, 0) == -1)
+		exit_with_message(1, "waitpid");
+	return (WEXITSTATUS(status));
 }

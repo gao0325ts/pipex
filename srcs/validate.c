@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check.c                                            :+:      :+:    :+:   */
+/*   validate.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 04:00:18 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/18 04:29:43 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/18 20:22:15 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	check_infile(char *infile)
+int	validate_infile(char *infile)
 {
-	if (access(infile, F_OK) == -1)
-		return (-1);
-	else if (access(infile, R_OK) == -1)
+	if ((access(infile, F_OK) == -1) || (access(infile, R_OK) == -1))
 		return (-1);
 	return (0);
 }
 
-int	check_outfile(char *outfile)
+int	validate_outfile(char *outfile)
 {
 	int	fd;
 
