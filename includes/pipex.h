@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 12:00:51 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/19 22:37:09 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/20 03:00:07 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-# define TMP_FILE ".here_doc_tmp"
+# define TMP_FILE "/tmp/.here_doc_tmp"
 
 typedef struct s_data
 {

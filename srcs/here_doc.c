@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:21:15 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/19 22:41:20 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/20 04:21:09 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ void	handle_here_doc_input(t_data *data)
 	{
 		write(STDOUT_FILENO, "> ", 2);
 		line = get_next_line(STDIN_FILENO);
-		if (!line || ft_strncmp(line, data->limiter,
-				ft_strlen(data->limiter)) == 0)
+		if (!line)
+			break ;
+		if (ft_strncmp(line, data->limiter, ft_strlen(data->limiter)) == 0
+			&& (ft_strlen(line) - 1) == ft_strlen(data->limiter))
 		{
 			free(line);
 			break ;
