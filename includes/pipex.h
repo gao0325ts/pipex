@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 12:00:51 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/19 22:20:45 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/19 22:37:09 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void		free_2d_array(char **array);
 void		free_data(t_data *data);
 void		exit_with_error(char *str, t_data *data);
 void		close_safely(int fd, t_data *data);
+void		dup2_safely(int oldfd, int newfd, t_data *data);
 int			get_last_exit_code(pid_t pid, t_data *data);
 void		validate_argument(int argc, char **argv);
 

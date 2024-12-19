@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:15:51 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/19 22:21:41 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/19 22:37:48 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	set_input_stream(t_data *data, int pipefd[2])
 	infile_fd = open(data->infile, O_RDONLY);
 	if (infile_fd < 0)
 		exit_with_error(data->infile, data);
-	dup2(infile_fd, STDIN_FILENO);
+	dup2_safely(infile_fd, STDIN_FILENO, data);
 	close_safely(infile_fd, data);
-	dup2(pipefd[1], STDOUT_FILENO);
+	dup2_safely(pipefd[1], STDOUT_FILENO, data);
 	close_safely(pipefd[1], data);
 	close_safely(pipefd[0], data);
 }
@@ -38,9 +38,9 @@ void	set_output_stream(t_data *data, int input_fd, int pipefd[2])
 	outfile_fd = open(data->outfile, O_WRONLY | O_CREAT | flag, 0644);
 	if (outfile_fd < 0)
 		exit_with_error(data->outfile, data);
-	dup2(input_fd, STDIN_FILENO);
+	dup2_safely(input_fd, STDIN_FILENO, data);
 	close_safely(input_fd, data);
-	dup2(outfile_fd, STDOUT_FILENO);
+	dup2_safely(outfile_fd, STDOUT_FILENO, data);
 	close_safely(outfile_fd, data);
 	close_safely(pipefd[1], data);
 	close_safely(pipefd[0], data);
@@ -48,9 +48,9 @@ void	set_output_stream(t_data *data, int input_fd, int pipefd[2])
 
 void	set_pipe_stream(t_data *data, int input_fd, int pipefd[2])
 {
-	dup2(input_fd, STDIN_FILENO);
+	dup2_safely(input_fd, STDIN_FILENO, data);
 	close_safely(input_fd, data);
-	dup2(pipefd[1], STDOUT_FILENO);
+	dup2_safely(pipefd[1], STDOUT_FILENO, data);
 	close_safely(pipefd[1], data);
 	close_safely(pipefd[0], data);
 }

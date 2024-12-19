@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 22:53:27 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/19 22:24:25 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/19 22:36:43 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ void	close_safely(int fd, t_data *data)
 {
 	if (close(fd) < 0)
 		exit_with_error("close", data);
+}
+
+void	dup2_safely(int oldfd, int newfd, t_data *data)
+{
+	if (dup2(oldfd, newfd) < 0)
+		exit_with_error("dup2", data);
 }
 
 int	get_last_exit_code(pid_t pid, t_data *data)
