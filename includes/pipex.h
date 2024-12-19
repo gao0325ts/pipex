@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 12:00:51 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/19 22:06:39 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/19 22:20:45 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,14 @@ void		run_pipeline(t_data *data, pid_t *pid);
 void		set_streams(int i, t_data *data, int input_fd, int pipefd[2]);
 void		set_input_stream(t_data *data, int pipefd[2]);
 void		set_output_stream(t_data *data, int input_fd, int pipefd[2]);
-void		set_pipe_stream(int input_fd, int pipefd[2]);
+void		set_pipe_stream(t_data *data, int input_fd, int pipefd[2]);
 void		execute_command(t_data *data, char *cmd_str);
 char		*check_command_path(char *cmd, char **path_list);
 char		*find_command_path(char *cmd_name, char **path_list);
 void		free_2d_array(char **array);
 void		free_data(t_data *data);
-void		exit_with_message(int exit_status, char *str, t_data *data);
+void		exit_with_error(char *str, t_data *data);
+void		close_safely(int fd, t_data *data);
 int			get_last_exit_code(pid_t pid, t_data *data);
 void		validate_argument(int argc, char **argv);
 

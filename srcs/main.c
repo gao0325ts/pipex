@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 20:42:25 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/19 22:03:43 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/19 22:24:37 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	main(int argc, char **argv, char **envp)
 	data = init_struct(argc, argv, envp);
 	if (!data)
 	{
-		ft_putendl_fd("Error: Initialization failed", STDERR_FILENO);
-		return (1);
+		ft_putendl_fd("pipex: Initialization failed", STDERR_FILENO);
+		return (EXIT_FAILURE);
 	}
 	if (data->is_here_doc)
 		run_here_doc_pipeline(data, &pid);
