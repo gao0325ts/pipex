@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 22:53:27 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/19 22:50:31 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/20 04:22:49 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ int	get_last_exit_code(pid_t pid, t_data *data)
 		if (unlink(TMP_FILE) < 0)
 			exit_with_error("unlink", data);
 	}
+	free_data(data);
 	return (WEXITSTATUS(status));
 }
