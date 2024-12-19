@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 12:59:38 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/19 17:39:49 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/19 21:51:24 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int	is_here_doc(char *str)
 {
-	return (ft_strncmp(str, "here_doc", 8) == 0 && ft_strlen(str) == 8);
+	if (ft_strncmp(str, "here_doc", 8) == 0 && ft_strlen(str) == 8)
+		return (1);
+	return (0);
 }
 
 int	init_cmds(int cmd_count, char **argv, int offset, t_data *data)
@@ -36,7 +38,6 @@ int	init_cmds(int cmd_count, char **argv, int offset, t_data *data)
 
 int	init_here_doc(int argc, char **argv, t_data *data)
 {
-	data->is_here_doc = 1;
 	data->limiter = argv[2];
 	data->infile = TMP_FILE;
 	data->outfile = argv[argc - 1];
@@ -46,7 +47,6 @@ int	init_here_doc(int argc, char **argv, t_data *data)
 
 int	init_basic(int argc, char **argv, t_data *data)
 {
-	data->is_here_doc = 0;
 	data->limiter = NULL;
 	data->infile = argv[1];
 	data->outfile = argv[argc - 1];
@@ -57,6 +57,7 @@ int	init_basic(int argc, char **argv, t_data *data)
 t_data	*init_struct(int argc, char **argv, char **envp)
 {
 	t_data	*data;
+	int		ret;
 
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
@@ -68,12 +69,12 @@ t_data	*init_struct(int argc, char **argv, char **envp)
 		return (NULL);
 	}
 	data->envp = envp;
-	if (is_here_doc(argv[1]) && init_here_doc(argc, argv, data) == -1)
-	{
-		free_data(data);
-		return (NULL);
-	}
-	else if (init_basic(argc, argv, data) == -1)
+	data->is_here_doc = is_here_doc(argv[1]);
+	if (data->is_here_doc)
+		ret = init_here_doc(argc, argv, data);
+	else
+		ret = init_basic(argc, argv, data);
+	if (ret == -1)
 	{
 		free_data(data);
 		return (NULL);

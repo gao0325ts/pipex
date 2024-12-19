@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:15:51 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/19 17:40:46 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/19 21:56:25 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,13 @@ void	set_input_stream(t_data *data, int pipefd[2])
 void	set_output_stream(t_data *data, int input_fd, int pipefd[2])
 {
 	int	outfile_fd;
+	int	flag;
 
-	outfile_fd = open(data->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (data->is_here_doc)
+		flag = O_APPEND;
+	else
+		flag = O_TRUNC;
+	outfile_fd = open(data->outfile, O_WRONLY | O_CREAT | flag, 0644);
 	if (outfile_fd < 0)
 		exit_with_message(1, data->outfile, data);
 	dup2(input_fd, STDIN_FILENO);
@@ -66,7 +71,7 @@ void	run_pipeline(t_data *data, pid_t *pid)
 	int	input_fd;
 	int	i;
 
-	input_fd = STDIN_FILENO;
+	// input_fd = STDIN_FILENO;
 	i = 0;
 	while (i < data->cmd_count)
 	{

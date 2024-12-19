@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 23:30:58 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/19 14:47:58 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/19 22:07:56 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	execute_command(t_data *data, char *cmd_str)
 	cmd_path = check_command_path(cmd[0], data->path_list);
 	if (!cmd_path)
 	{
-		ft_dprintf(STDERR_FILENO, "%s: command not found\n", cmd[0]);
+		ft_dprintf(STDERR_FILENO, "pipex: %s: command not found\n", cmd[0]);
 		free_data(data);
 		free_2d_array(cmd);
 		exit(127);

@@ -6,28 +6,11 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:21:15 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/19 21:19:37 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/19 21:59:18 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	set_here_doc_streams(t_data *data)
-{
-	int	infile_fd;
-	int	outfile_fd;
-
-	infile_fd = open(data->infile, O_RDONLY);
-	if (infile_fd < 0)
-		exit_with_message(1, data->infile, data);
-	dup2(infile_fd, STDIN_FILENO);
-	close(infile_fd);
-	outfile_fd = open(data->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (outfile_fd < 0)
-		exit_with_message(1, data->outfile, data);
-	dup2(outfile_fd, STDOUT_FILENO);
-	close(outfile_fd);
-}
 
 void	handle_here_doc_input(t_data *data)
 {
@@ -55,14 +38,27 @@ void	handle_here_doc_input(t_data *data)
 
 void	run_here_doc_pipeline(t_data *data, int *pid)
 {
+	int pipefd[2];
+	int input_fd;
+	int i;
+
 	handle_here_doc_input(data);
-	(*pid) = fork();
-	if (*pid < 0)
-		exit_with_message(1, "fork", data);
-	if (*pid == 0)
+	i = 0;
+	while (i < data->cmd_count)
 	{
-		set_here_doc_streams(data);
-		execute_command(data, data->cmds[0]);
+		if (pipe(pipefd) < 0)
+			exit_with_message(1, "pipe", data);
+		(*pid) = fork();
+		if (*pid < 0)
+			exit_with_message(1, "fork", data);
+		if (*pid == 0)
+		{
+			set_streams(i, data, input_fd, pipefd);
+			execute_command(data, data->cmds[i]);
+		}
+		close(pipefd[1]);
+		input_fd = pipefd[0];
+		i++;
 	}
-	unlink(TMP_FILE);
+	close(input_fd);
 }

@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 12:00:51 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/19 17:41:52 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/19 22:06:39 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int			init_basic(int argc, char **argv, t_data *data);
 int			init_here_doc(int argc, char **argv, t_data *data);
 void		run_here_doc_pipeline(t_data *data, int *pid);
 void		handle_here_doc_input(t_data *data);
-void		set_here_doc_streams(t_data *data);
 void		run_pipeline(t_data *data, pid_t *pid);
 void		set_streams(int i, t_data *data, int input_fd, int pipefd[2]);
 void		set_input_stream(t_data *data, int pipefd[2]);
@@ -61,5 +60,6 @@ void		free_2d_array(char **array);
 void		free_data(t_data *data);
 void		exit_with_message(int exit_status, char *str, t_data *data);
 int			get_last_exit_code(pid_t pid, t_data *data);
+void		validate_argument(int argc, char **argv);
 
 #endif
