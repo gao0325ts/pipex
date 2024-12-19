@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:21:15 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/19 21:59:18 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/19 22:09:31 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	handle_here_doc_input(t_data *data)
 
 void	run_here_doc_pipeline(t_data *data, int *pid)
 {
-	int pipefd[2];
-	int input_fd;
-	int i;
+	int	pipefd[2];
+	int	input_fd;
+	int	i;
 
 	handle_here_doc_input(data);
 	i = 0;

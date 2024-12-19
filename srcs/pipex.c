@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:15:51 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/19 21:56:25 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/19 22:09:42 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	run_pipeline(t_data *data, pid_t *pid)
 	int	input_fd;
 	int	i;
 
-	// input_fd = STDIN_FILENO;
 	i = 0;
 	while (i < data->cmd_count)
 	{
