@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 17:02:52 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/18 17:03:06 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/19 14:31:51 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	free_2d_array(char **array)
 	free(array);
 }
 
-void	free_vars(t_vars *vars)
+void	free_data(t_data *data)
 {
-	free_2d_array(vars->path_list);
-	free(vars->cmds);
-	free(vars);
+	free_2d_array(data->path_list);
+	free(data->cmds);
+	free(data);
 }

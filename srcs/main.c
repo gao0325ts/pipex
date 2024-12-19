@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 20:42:25 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/19 00:03:44 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/19 17:38:56 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,23 @@
 int	main(int argc, char **argv, char **envp)
 {
 	pid_t	pid;
-	t_vars	*vars;
+	t_data	*data;
 
 	if (argc < 5)
 	{
-		ft_putendl_fd("Usage: ./pipex file1 cmd1 cmd2 ... cmdN file2", STDERR_FILENO);
+		ft_putendl_fd("Error: Invalid argument", STDERR_FILENO);
 		return (1);
 	}
-	vars = init_struct(argc, argv, envp);
-	if (!vars)
+	data = init_struct(argc, argv, envp);
+	if (!data)
 	{
-		ft_putendl_fd("", STDERR_FILENO);
+		ft_putendl_fd("Error: Initialization failed", STDERR_FILENO);
 		return (1);
 	}
-	if (vars->is_here_doc == 1)
-		run_here_doc_pipeline(vars, envp, &pid);
+	if (data->is_here_doc == 1)
+		run_here_doc_pipeline(data, &pid);
 	else
-		run_pipeline(vars, envp, &pid);
-	free_vars(vars);
-	return (get_last_exit_code(pid));
+		run_pipeline(data, &pid);
+	free_data(data);
+	return (get_last_exit_code(pid, data));
 }

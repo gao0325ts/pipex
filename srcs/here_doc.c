@@ -6,46 +6,42 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:21:15 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/18 20:35:07 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/19 17:40:31 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	set_here_doc_streams(char *infile, char *outfile)
+void	set_here_doc_streams(t_data *data)
 {
 	int	infile_fd;
 	int	outfile_fd;
 
-	if (validate_infile(infile) == -1)
-		exit_with_message(1, infile);
-	if (validate_outfile(outfile) == -1)
-		exit_with_message(1, outfile);
-	infile_fd = open(infile, O_RDONLY);
+	infile_fd = open(data->infile, O_RDONLY);
 	if (infile_fd < 0)
-		exit_with_message(1, infile);
+		exit_with_message(1, data->infile, data);
 	dup2(infile_fd, STDIN_FILENO);
 	close(infile_fd);
-	outfile_fd = open(outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	outfile_fd = open(data->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (outfile_fd < 0)
-		exit_with_message(1, outfile);
+		exit_with_message(1, data->outfile, data);
 	dup2(outfile_fd, STDOUT_FILENO);
 	close(outfile_fd);
 }
 
-void	handle_here_doc_input(char *infile, char *limiter)
+void	handle_here_doc_input(t_data *data)
 {
 	int		tmp_fd;
 	char	*line;
 
-	tmp_fd = open(infile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	tmp_fd = open(data->infile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (tmp_fd < 0)
-		exit_with_message(1, TMP_FILE);
+		exit_with_message(1, TMP_FILE, data);
 	while (1)
 	{
 		write(STDOUT_FILENO, "> ", 2);
 		line = get_next_line(STDIN_FILENO);
-		if (!line || ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
+		if (!line || ft_strncmp(line, data->limiter, ft_strlen(data->limiter)) == 0)
 		{
 			free(line);
 			break ;
@@ -56,17 +52,16 @@ void	handle_here_doc_input(char *infile, char *limiter)
 	close(tmp_fd);
 }
 
-void	run_here_doc_pipeline(t_vars *vars, char **envp, int *pid)
+void	run_here_doc_pipeline(t_data *data, int *pid)
 {
-	handle_here_doc_input(vars->infile, vars->limiter);
+	handle_here_doc_input(data);
 	(*pid) = fork();
 	if (*pid < 0)
-		exit_with_message(1, "fork");
+		exit_with_message(1, "fork", data);
 	if (*pid == 0)
 	{
-		set_here_doc_streams(vars->infile, vars->outfile);
-		execute_command(vars->path_list, vars->cmds[0], envp);
+		set_here_doc_streams(data);
+		execute_command(data, data->cmds[0]);
 	}
-	wait(NULL);
 	unlink(TMP_FILE);
 }
