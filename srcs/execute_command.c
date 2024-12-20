@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 23:30:58 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/19 22:38:55 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/20 04:40:05 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,15 @@ char	*find_command_path(char *cmd_name, char **path_list)
 	return (NULL);
 }
 
-char	*check_command_path(char *cmd, char **path_list)
+char	*check_command_path(char *cmd, t_data *data)
 {
+	if (!data->path_list)
+	{
+		if (access(cmd, F_OK) == 0)
+			return (ft_strdup(cmd));
+		else
+			exit_with_error(cmd, data);
+	}
 	if (ft_strncmp(cmd, "/", 1) == 0 || ft_strncmp(cmd, "./", 2) == 0
 		|| ft_strncmp(cmd, "../", 3) == 0)
 	{
@@ -42,7 +49,7 @@ char	*check_command_path(char *cmd, char **path_list)
 		else
 			return (NULL);
 	}
-	return (find_command_path(cmd, path_list));
+	return (find_command_path(cmd, data->path_list));
 }
 
 void	execute_command(t_data *data, char *cmd_str)
@@ -56,10 +63,10 @@ void	execute_command(t_data *data, char *cmd_str)
 		free_data(data);
 		exit(1);
 	}
-	cmd_path = check_command_path(cmd[0], data->path_list);
+	cmd_path = check_command_path(cmd[0], data);
 	if (!cmd_path)
 	{
-		ft_dprintf(STDERR_FILENO, "pipex: %s: command not found\n", cmd[0]);
+		ft_dprintf(STDERR_FILENO, "%s: command not found\n", cmd[0]);
 		free_data(data);
 		free_2d_array(cmd);
 		exit(127);

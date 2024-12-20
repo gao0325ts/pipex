@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 12:59:38 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/19 21:51:24 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/20 04:30:47 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,8 @@ t_data	*init_struct(int argc, char **argv, char **envp)
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 		return (NULL);
-	data->path_list = get_path_list(envp);
-	if (!data->path_list)
-	{
-		free(data);
+	if (set_path_list(data, envp) == -1)
 		return (NULL);
-	}
 	data->envp = envp;
 	data->is_here_doc = is_here_doc(argv[1]);
 	if (data->is_here_doc)
