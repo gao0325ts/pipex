@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:21:15 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/20 04:21:09 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/20 09:30:31 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	run_here_doc_pipeline(t_data *data, int *pid)
 	int	input_fd;
 	int	i;
 
-	handle_here_doc_input(data);
+	input_fd = -1;
 	i = 0;
 	while (i < data->cmd_count)
 	{
@@ -59,6 +59,8 @@ void	run_here_doc_pipeline(t_data *data, int *pid)
 			execute_command(data, data->cmds[i]);
 		}
 		close_safely(pipefd[1], data);
+		if (input_fd != -1)
+			close_safely(input_fd, data);
 		input_fd = pipefd[0];
 		i++;
 	}

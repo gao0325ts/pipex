@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 20:42:25 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/19 22:49:58 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/20 09:30:42 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ int	main(int argc, char **argv, char **envp)
 		return (EXIT_FAILURE);
 	}
 	if (data->is_here_doc)
+	{
+		handle_here_doc_input(data);
 		run_here_doc_pipeline(data, &pid);
+	}
 	else
 		run_pipeline(data, &pid);
 	return (get_last_exit_code(pid, data));
