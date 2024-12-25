@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:15:51 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/20 09:30:01 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/25 14:48:22 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	set_input_stream(t_data *data, int pipefd[2])
 
 	infile_fd = open(data->infile, O_RDONLY);
 	if (infile_fd < 0)
-		exit_with_error(data->infile, data);
+		exit_with_error(data->infile, data, 1);
 	dup2_safely(infile_fd, STDIN_FILENO, data);
 	close_safely(infile_fd, data);
 	dup2_safely(pipefd[1], STDOUT_FILENO, data);
@@ -37,7 +37,7 @@ void	set_output_stream(t_data *data, int input_fd, int pipefd[2])
 		flag = O_TRUNC;
 	outfile_fd = open(data->outfile, O_WRONLY | O_CREAT | flag, 0644);
 	if (outfile_fd < 0)
-		exit_with_error(data->outfile, data);
+		exit_with_error(data->outfile, data, 1);
 	dup2_safely(input_fd, STDIN_FILENO, data);
 	close_safely(input_fd, data);
 	dup2_safely(outfile_fd, STDOUT_FILENO, data);
@@ -76,10 +76,10 @@ void	run_pipeline(t_data *data, pid_t *pid)
 	while (i < data->cmd_count)
 	{
 		if (pipe(pipefd) < 0)
-			exit_with_error("pipe", data);
+			exit_with_error("pipe", data, 1);
 		(*pid) = fork();
 		if (*pid < 0)
-			exit_with_error("fork", data);
+			exit_with_error("fork", data, 1);
 		if (*pid == 0)
 		{
 			set_streams(i, data, input_fd, pipefd);

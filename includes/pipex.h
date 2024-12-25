@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 12:00:51 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/20 04:40:28 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/25 14:47:59 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char		*check_command_path(char *cmd, t_data *data);
 char		*find_command_path(char *cmd_name, char **path_list);
 void		free_2d_array(char **array);
 void		free_data(t_data *data);
-void		exit_with_error(char *str, t_data *data);
+void		exit_with_error(char *str, t_data *data, int exit_status);
 void		close_safely(int fd, t_data *data);
 void		dup2_safely(int oldfd, int newfd, t_data *data);
 int			get_last_exit_code(pid_t pid, t_data *data);

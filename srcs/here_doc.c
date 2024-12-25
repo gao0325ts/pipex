@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:21:15 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/20 09:30:31 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/25 14:48:10 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	handle_here_doc_input(t_data *data)
 
 	tmp_fd = open(data->infile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (tmp_fd < 0)
-		exit_with_error(TMP_FILE, data);
+		exit_with_error(TMP_FILE, data, 1);
 	while (1)
 	{
 		write(STDOUT_FILENO, "> ", 2);
@@ -49,10 +49,10 @@ void	run_here_doc_pipeline(t_data *data, int *pid)
 	while (i < data->cmd_count)
 	{
 		if (pipe(pipefd) < 0)
-			exit_with_error("pipe", data);
+			exit_with_error("pipe", data, 1);
 		(*pid) = fork();
 		if (*pid < 0)
-			exit_with_error("fork", data);
+			exit_with_error("fork", data, 1);
 		if (*pid == 0)
 		{
 			set_streams(i, data, input_fd, pipefd);

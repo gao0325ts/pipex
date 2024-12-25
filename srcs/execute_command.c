@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 23:30:58 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/20 04:40:05 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/25 14:47:46 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*check_command_path(char *cmd, t_data *data)
 		if (access(cmd, F_OK) == 0)
 			return (ft_strdup(cmd));
 		else
-			exit_with_error(cmd, data);
+			exit_with_error(cmd, data, 127);
 	}
 	if (ft_strncmp(cmd, "/", 1) == 0 || ft_strncmp(cmd, "./", 2) == 0
 		|| ft_strncmp(cmd, "../", 3) == 0)
