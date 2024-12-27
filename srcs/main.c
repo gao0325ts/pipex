@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 20:42:25 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/20 09:30:42 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/27 02:49:01 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,5 @@ int	main(int argc, char **argv, char **envp)
 	}
 	else
 		run_pipeline(data, &pid);
-	return (get_last_exit_code(pid, data));
+	return (get_last_exit_code(data));
 }
