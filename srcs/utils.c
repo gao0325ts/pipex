@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 22:53:27 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/29 00:28:40 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/29 00:30:38 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,16 @@ void	dup2_safely(int oldfd, int newfd, t_data *data)
 
 int	get_last_exit_code(t_data *data)
 {
-    int i;
+	int	i;
 	int	status;
 
-    i = 0;
-    while (i < data->cmd_count)
-    {
-        if (wait(&status) < 0)
-            exit_with_error("wait", data, 1);
-        i++;
-    }
+	i = 0;
+	while (i < data->cmd_count)
+	{
+		if (wait(&status) < 0)
+			exit_with_error("wait", data, 1);
+		i++;
+	}
 	if (data->here_doc_flag)
 	{
 		if (unlink(TMP_FILE) < 0)
