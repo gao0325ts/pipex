@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:15:51 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/27 02:49:25 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/29 00:28:27 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	set_output_stream(t_data *data, int input_fd, int pipefd[2])
 	int	outfile_fd;
 	int	flag;
 
-	if (data->is_here_doc)
+	if (data->here_doc_flag)
 		flag = O_APPEND;
 	else
 		flag = O_TRUNC;

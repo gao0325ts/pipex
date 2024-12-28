@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 12:59:38 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/20 04:30:47 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/29 00:28:05 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ t_data	*init_struct(int argc, char **argv, char **envp)
 	if (set_path_list(data, envp) == -1)
 		return (NULL);
 	data->envp = envp;
-	data->is_here_doc = is_here_doc(argv[1]);
-	if (data->is_here_doc)
+	data->here_doc_flag = is_here_doc(argv[1]);
+	if (data->here_doc_flag)
 		ret = init_here_doc(argc, argv, data);
 	else
 		ret = init_basic(argc, argv, data);

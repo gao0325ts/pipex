@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 12:00:51 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/27 02:49:09 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/29 00:27:51 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 
 typedef struct s_data
 {
-	int		is_here_doc;
+	int		here_doc_flag;
 	char	*limiter;
 	char	*infile;
 	char	*outfile;

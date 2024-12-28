@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 20:42:25 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/27 02:49:01 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/29 00:28:17 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_putendl_fd("pipex: Initialization failed", STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
-	if (data->is_here_doc)
+	if (data->here_doc_flag)
 	{
 		handle_here_doc_input(data);
 		run_here_doc_pipeline(data, &pid);
