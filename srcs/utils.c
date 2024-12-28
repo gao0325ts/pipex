@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 22:53:27 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/29 00:30:38 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/29 01:53:52 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,42 +26,47 @@ void	validate_argument(int argc, char **argv)
 	}
 }
 
-void	exit_with_error(char *str, t_data *data, int exit_status)
+void	exit_with_error(char *str, t_data *data)
 {
 	ft_dprintf(STDERR_FILENO, "pipex: %s: %s\n", str, strerror(errno));
 	free_data(data);
-	exit(exit_status);
+	exit(EXIT_FAILURE);
 }
 
 void	close_safely(int fd, t_data *data)
 {
 	if (close(fd) < 0)
-		exit_with_error("close", data, 1);
+		exit_with_error("close", data);
 }
 
 void	dup2_safely(int oldfd, int newfd, t_data *data)
 {
 	if (dup2(oldfd, newfd) < 0)
-		exit_with_error("dup2", data, 1);
+		exit_with_error("dup2", data);
 }
 
 int	get_last_exit_code(t_data *data)
 {
 	int	i;
 	int	status;
+	int	exit_code;
 
+	exit_code = 0;
 	i = 0;
 	while (i < data->cmd_count)
 	{
 		if (wait(&status) < 0)
-			exit_with_error("wait", data, 1);
+			exit_with_error("wait", data);
+		if ((WIFEXITED(status) && WEXITSTATUS(status) != 0)
+			|| (WIFSIGNALED(status)))
+			exit_code = 1;
 		i++;
 	}
 	if (data->here_doc_flag)
 	{
 		if (unlink(TMP_FILE) < 0)
-			exit_with_error("unlink", data, 1);
+			exit_with_error("unlink", data);
 	}
 	free_data(data);
-	return (WEXITSTATUS(status));
+	return (exit_code);
 }

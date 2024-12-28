@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 23:30:58 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/25 14:47:46 by stakada          ###   ########.fr       */
+/*   Updated: 2024/12/29 01:52:45 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*check_command_path(char *cmd, t_data *data)
 		if (access(cmd, F_OK) == 0)
 			return (ft_strdup(cmd));
 		else
-			exit_with_error(cmd, data, 127);
+			exit_with_error(cmd, data);
 	}
 	if (ft_strncmp(cmd, "/", 1) == 0 || ft_strncmp(cmd, "./", 2) == 0
 		|| ft_strncmp(cmd, "../", 3) == 0)
@@ -61,7 +61,7 @@ void	execute_command(t_data *data, char *cmd_str)
 	if (!cmd)
 	{
 		free_data(data);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	cmd_path = check_command_path(cmd[0], data);
 	if (!cmd_path)
@@ -69,7 +69,7 @@ void	execute_command(t_data *data, char *cmd_str)
 		ft_dprintf(STDERR_FILENO, "%s: command not found\n", cmd[0]);
 		free_data(data);
 		free_2d_array(cmd);
-		exit(127);
+		exit(EXIT_FAILURE);
 	}
 	execve(cmd_path, cmd, data->envp);
 	free_data(data);
