@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 23:30:58 by stakada           #+#    #+#             */
-/*   Updated: 2024/12/29 01:52:45 by stakada          ###   ########.fr       */
+/*   Updated: 2025/01/01 23:40:27 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,5 @@ void	execute_command(t_data *data, char *cmd_str)
 	free_2d_array(cmd);
 	ft_dprintf(STDERR_FILENO, "pipex: %s: %s\n", cmd_path, strerror(errno));
 	free(cmd_path);
-	exit(1);
+	exit(EXIT_FAILURE);
 }
